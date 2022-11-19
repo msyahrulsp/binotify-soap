@@ -4,6 +4,7 @@ import com.binotify.database.Database;
 import com.binotify.interfaces.CheckStatusInterface;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.sql.ResultSet;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
 @WebService(endpointInterface = "com.binotify.interfaces.CheckStatusInterface")
 public class CheckStatusController extends Database implements CheckStatusInterface {
     @WebMethod
-    public boolean getStatus(int creator_id, int subscriber_id) {
+    public boolean getStatus(@WebParam(name = "creator_id") int creator_id, @WebParam(name = "subscriber_id") int subscriber_id) {
         String query = "select * from subscription where creator_id = " + creator_id + " and subscriber_id = " + subscriber_id;
         String status = null;
         try {
@@ -22,7 +23,7 @@ public class CheckStatusController extends Database implements CheckStatusInterf
             e.printStackTrace();
             System.out.println(e);
         }
-        return status == "ACCEPTED";
+        return status.equals("ACCEPTED");
     }
 
 //    public static void main(String[] args) {
