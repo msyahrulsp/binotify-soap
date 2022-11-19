@@ -10,5 +10,5 @@ public interface CheckStatusInterface {
     @WebMethod
     @XmlElementWrapper
     @XmlElement(name = "return")
-    Boolean getStatus(Integer id);
+    boolean getStatus(int creator_id, int subscriber_id);
 }
