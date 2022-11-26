@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Database {
     private String driver;
+    private String host = "localhost";
     private String port = "3307";
     private String name = "binotify-soap";
     private String username = "root";
@@ -19,7 +20,6 @@ public class Database {
     public Database() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String host = "localhost";
             String url = "jdbc:mysql://" + host + ":" + this.port + "/" + this.name;
             this.conn = DriverManager.getConnection(url,this.username,this.password);
             this.statement = this.conn.createStatement();
