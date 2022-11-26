@@ -15,10 +15,13 @@ public class CheckStatusController extends Database implements CheckStatusInterf
     @WebMethod
     public boolean getStatus(@WebParam(name = "creator_id") int creator_id, @WebParam(name = "subscriber_id") int subscriber_id) {
         String query = "select * from subscription where creator_id = " + creator_id + " and subscriber_id = " + subscriber_id;
-        String status = null;
+        String status = "";
         try {
             ResultSet res = this.executeQuery(query);
-            List<Map<String, Object>> data = getFormattedRes(res);status = (String) data.get(0).get("status");
+            List<Map<String, Object>> data = getFormattedRes(res);
+            if (data != null) {
+                status = (String) data.get(0).get("status");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e);
@@ -28,7 +31,7 @@ public class CheckStatusController extends Database implements CheckStatusInterf
 
 //    public static void main(String[] args) {
 //        CheckStatusController ctr = new CheckStatusController();
-//        System.out.println(ctr.getStatus(1,2));
+//        System.out.println(ctr.getStatus(1,1));
 //    }
 }
 

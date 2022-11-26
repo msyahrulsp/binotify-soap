@@ -23,6 +23,6 @@ CREATE TABLE `binotify-soap`.`subscription` (
 );
 
 INSERT INTO `binotify-soap`.`subscription` VALUES
-('3','5',''),
-('3','4','AAA'),
-('1','2','ACCEPTED');
+('3','5','PENDING'),
+('3','4','REJECTED'),
+('1','1','ACCEPTED');

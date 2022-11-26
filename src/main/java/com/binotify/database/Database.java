@@ -9,8 +9,7 @@ import java.util.Map;
 
 public class Database {
     private String driver;
-    private String host = "localhost";
-    private String port = "3306";
+    private String port = "3307";
     private String name = "binotify-soap";
     private String username = "root";
     private String password = "";
@@ -20,7 +19,8 @@ public class Database {
     public Database() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.name;
+            String host = "localhost";
+            String url = "jdbc:mysql://" + host + ":" + this.port + "/" + this.name;
             this.conn = DriverManager.getConnection(url,this.username,this.password);
             this.statement = this.conn.createStatement();
         } catch (Exception e) {
@@ -37,16 +37,20 @@ public class Database {
 //  Format result set to List of records [{...colName}]
         List<Map<String, Object>> resList = new ArrayList<Map<String, Object>>();
         if (res != null) {
-            ResultSetMetaData meta = res.getMetaData();
-            int columns = meta.getColumnCount();
-            while (res.next()) {
-                Map<String, Object> row = new HashMap<String, Object>();
-                for (int i = 1; i <= columns; ++i) {
-                    String colName = meta.getColumnName(i);
-                    Object val = res.getObject(i);
-                    row.put(colName, val);
-                }
-                resList.add(row);
+            if (!res.next()) {
+                return null;
+            } else {
+                ResultSetMetaData meta = res.getMetaData();
+                int columns = meta.getColumnCount();
+                do {
+                    Map<String, Object> row = new HashMap<String, Object>();
+                    for (int i = 1; i <= columns; ++i) {
+                        String colName = meta.getColumnName(i);
+                        Object val = res.getObject(i);
+                        row.put(colName, val);
+                    }
+                    resList.add(row);
+                } while (res.next());
             }
         }
         return resList;
