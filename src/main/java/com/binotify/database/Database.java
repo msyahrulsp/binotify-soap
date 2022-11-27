@@ -33,6 +33,10 @@ public class Database {
         return this.statement.executeQuery(query);
     }
 
+    public int executeUpdate(String query) throws SQLException {
+        return this.statement.executeUpdate(query);
+    }
+
     public static List<Map<String, Object>> getFormattedRes(ResultSet res) throws SQLException {
 //  Format result set to List of records [{...colName}]
         List<Map<String, Object>> resList = new ArrayList<Map<String, Object>>();
