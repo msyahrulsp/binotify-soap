@@ -1,6 +1,9 @@
 package com.binotify.database;
 
-import javax.xml.transform.Result;
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,27 @@ public class Database {
 
     public int executeUpdate(String query) throws SQLException {
         return this.statement.executeUpdate(query);
+    }
+
+    public void insertLog(WebServiceContext wsContext, String description, String endpoint) {
+        try {
+            MessageContext msgContext = wsContext.getMessageContext();
+            HttpExchange exchange = (HttpExchange)msgContext.get("com.sun.xml.ws.http.exchange");
+            Headers reqHeaders = exchange.getRequestHeaders();
+
+            String reqIP = reqHeaders.getFirst("X-Forwarded-For");
+            String reqDate = reqHeaders.getFirst("Date");
+
+//        System.out.println("headers" + reqHeaders.getFirst("X-Forwarded-For"));
+//        System.out.println("date" + reqHeaders.getFirst("Date"));
+
+            String query = "INSERT INTO `logging` (`id`, `description`, `ip`, `endpoint`, `requested_at`) VALUES (NULL, '" + description + "', '" + reqIP + "', '" + endpoint + "', '" + reqDate + "')";
+
+            int res = executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
     }
 
     public static List<Map<String, Object>> getFormattedRes(ResultSet res) throws SQLException {
