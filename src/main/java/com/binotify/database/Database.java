@@ -42,8 +42,9 @@ public class Database {
 
     /**
      * return true if api key exist in SOAP database, else return false
-     * **/
-    public boolean verifyAPIKey(WebServiceContext wsContext, String key) {
+     * @param wsContext
+     */
+    public boolean verifyAPIKey(WebServiceContext wsContext) {
         boolean status = false;
         try {
             MessageContext msgContext = wsContext.getMessageContext();
@@ -51,6 +52,8 @@ public class Database {
             Headers reqHeaders = exchange.getRequestHeaders();
 
             String reqAuth = reqHeaders.getFirst("Authorization");
+            String key = reqAuth.substring(6);
+            System.out.println("req auth: " + reqAuth + "\napi_key: " + key);
 
             String query = "SELECT COUNT(1) as status FROM api_key WHERE api_key = " + "'" + key + "'";
             ResultSet res = executeQuery(query);
@@ -58,7 +61,9 @@ public class Database {
 
             if (((Long) data.get(0).get("status")).intValue() == 1) {
                 status = true;
-                System.out.println("API Verified");
+                System.out.println("API key is verified");
+            } else {
+                System.out.println("API key is not verified.");
             }
         } catch (Exception e) {
             e.printStackTrace();

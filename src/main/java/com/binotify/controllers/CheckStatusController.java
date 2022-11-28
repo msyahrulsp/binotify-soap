@@ -18,7 +18,7 @@ public class CheckStatusController extends Database implements CheckStatusInterf
     @WebMethod
     public boolean getStatus(@WebParam(name = "creator_id") int creator_id, @WebParam(name = "subscriber_id") int subscriber_id) {
         String api_key = "LcS0-SmJjjUoooMAKOANu_JdFij7AOb1kaFkNXuGVWY"; // dummy
-        if (verifyAPIKey(wsContext, api_key)) {
+        if (verifyAPIKey(wsContext)) {
             String query = "select * from subscription where creator_id = " + creator_id + " and subscriber_id = " + subscriber_id;
             String status = "";
             try {
