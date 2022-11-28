@@ -40,6 +40,39 @@ public class Database {
         return this.statement.executeUpdate(query);
     }
 
+    /**
+     * return true if api key exist in SOAP database, else return false
+     * **/
+    public boolean verifyAPIKey(WebServiceContext wsContext, String key) {
+        boolean status = false;
+        try {
+            MessageContext msgContext = wsContext.getMessageContext();
+            HttpExchange exchange = (HttpExchange)msgContext.get("com.sun.xml.ws.http.exchange");
+            Headers reqHeaders = exchange.getRequestHeaders();
+
+            String reqAuth = reqHeaders.getFirst("Authorization");
+
+            String query = "SELECT COUNT(1) as status FROM api_key WHERE api_key = " + "'" + key + "'";
+            ResultSet res = executeQuery(query);
+            List<Map<String, Object>> data = getFormattedRes(res);
+
+            if (((Long) data.get(0).get("status")).intValue() == 1) {
+                status = true;
+                System.out.println("API Verified");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    /**
+     * insert log to SOAP database
+     * @param wsContext
+     * @param description
+     * @param endpoint
+     */
     public void insertLog(WebServiceContext wsContext, String description, String endpoint) {
         try {
             MessageContext msgContext = wsContext.getMessageContext();
@@ -87,6 +120,7 @@ public class Database {
 //    public static void main(String[] args) {
 //        try {
 //            Database db = new Database();
+//            System.out.println("status: " + db.verifyAPIKey("LcS0-SmJjjUoooMAKOANu_JdFij7AOb1kaFkNXuGVWY"));
 //            ResultSet res = db.executeQuery("select * from subscription");
 //            List<Map<String, Object>> data = db.getFormattedRes(res);
 //            System.out.println(data);

@@ -1,15 +1,15 @@
 DROP DATABASE IF EXISTS `binotify-soap`;
 CREATE DATABASE `binotify-soap`;
 
-DROP TABLE IF EXISTS `binotify-soap`.`api-key`;
-CREATE TABLE `binotify-soap`.`api-key` (
+DROP TABLE IF EXISTS `binotify-soap`.`api_key`;
+CREATE TABLE `binotify-soap`.`api_key` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `api_key` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `binotify-soap`.`api-key` (`id`, `email`, `api_key`) VALUES
+INSERT INTO `binotify-soap`.`api_key` (`id`, `email`, `api_key`) VALUES
   (1, 'user@gmail.com', 'LcS0-SmJjjUoooMAKOANu_JdFij7AOb1kaFkNXuGVWY');
 
 DROP TABLE IF EXISTS `binotify-soap`.`logging`;

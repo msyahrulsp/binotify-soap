@@ -26,10 +26,8 @@ public class GenerateAPIKeyController extends Database implements GenerateAPIKey
 
         try {
             int res = executeUpdate(query);
-            String description = "Generate API Key untuk user " + email;
-            String endpoint = "/generate-api-key";
             if (res != 0) {
-                insertLog(wsContext, description, endpoint);
+                insertLog(wsContext, "Generate API Key untuk user " + email, "/generate-api-key");
             }
         } catch (Exception e) {
             e.printStackTrace();
