@@ -8,7 +8,6 @@ COPY src ./src
 
 RUN --mount=type=cache,target=/root/.m2 mvn clean install assembly:single
 
-# package the application
 FROM amazoncorretto:8
 
 WORKDIR /app
