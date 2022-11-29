@@ -1,46 +1,50 @@
 version: '3.8'
 
 services:
-  database:
+  soap-database:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     expose:
-      - 3306
+      - 3308
     ports:
-      - 3306:3306
+      - 3308:3308
     volumes:
       - ./database:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_INITDB_SKIP_TZINFO: 1
-    container_name: soap-db
-    networks:
-      - app-tier
+      MYSQL_TCP_PORT: 3308
+    container_name: soap-database
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3306"]
-      interval: 4s
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3308"]
+      interval: 5s
       timeout: 10s
       retries: 5
 
   soap:
     build: .
     depends_on:
-      database:
+      soap-database:
         condition: service_healthy
     ports:
-      - 3002:3002
+      - 3003:3003
     volumes:
       - ./src:/usr/src/app/src
     environment:
-      - DB_HOST=database
+      - DB_HOST=soap-database
       - DB_USER=root
       - DB_PASSWORD=password
       - DB_NAME=binotify-soap
-      - DB_PORT=3306
-    container_name: soap-svc
-    networks:
-      - app-tier
+      - DB_PORT=3308
+    container_name: soap-service
     
-networks:
-  app-tier:
-    driver: bridge
+  soap-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: soap-phpmyadmin
+    environment:
+      PMA_HOST: soap-database
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 8082:80
+    depends_on:
+      - soap-database
