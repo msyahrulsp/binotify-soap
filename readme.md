@@ -14,7 +14,8 @@ Usage:
 ```
 3. Add code below to log the incoming request.
 ```java
-insertLog(wsContext, "request", "endpoint");
+// void
+insertLog(wsContext, "log message", "endpoint");
 ```
 
 ### API Key
@@ -22,6 +23,7 @@ Digunakan untuk verifikasi incoming request yang berkaitan dengan subscription.
 Usage:
 1. Add code below before any operation in your controller.
 ```java
+// return boolean
 verifyAPIKey(wsContext)
 ```
 2. Do step 1 and 2 in logging above (we need WebServiceContext to read http request headers).
@@ -57,32 +59,3 @@ public class CheckStatusController extends Database implements CheckStatusInterf
 ```
 
 ## Endpoints
-### Generate API Key
-Digunakan untuk mendapatkan API key dari user yang melakukan registrasi di binotify premium. Menyimpan api-key dan email user ke database. Dipanggil melalui binotify REST.  
-
-@param {string} email  
-@return {string} api-key
-```
-POST /generate-api-key?wsdl
-```
-Request
-```xml
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://interfaces.binotify.com/">
-    <soapenv:Header/>
-    <soapenv:Body>
-        <int:generateAPIKey>
-            <email>user@gmail.com</email>
-        </int:generateAPIKey>
-    </soapenv:Body>
-</soapenv:Envelope>
-```
-Response
-```xml
-<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
-<S:Body>
-    <ns2:generateAPIKeyResponse xmlns:ns2="http://interfaces.binotify.com/">
-        <return>LcS0-SmJjjUoooMAKOANu_JdFij7AOb1kaFkNXuGVWY</return>
-    </ns2:generateAPIKeyResponse>
-</S:Body>
-</S:Envelope>
-```
