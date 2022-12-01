@@ -14,6 +14,6 @@ WORKDIR /app
 
 COPY --from=build /app/target/binotify-soap-jar-with-dependencies.jar /app/app.jar
 
-EXPOSE 3002
+EXPOSE 3003
 
 ENTRYPOINT ["java","-jar","app.jar"]
