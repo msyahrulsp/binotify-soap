@@ -37,7 +37,7 @@ INSERT INTO `binotify-soap`.`subscription` VALUES
 ('3','1','PENDING'),
 ('4','2','PENDING'),
 ('1','3','ACCEPTED'),
-('1', '4', 'PENDING'),
-('3', '1', 'ACCEPTED'),
-('4', '2', 'REJECTED'),
-('1', '3', 'PENDING');
+('1','4','PENDING'),
+('3','1','ACCEPTED'),
+('4','2','REJECTED'),
+('1','3','PENDING');
