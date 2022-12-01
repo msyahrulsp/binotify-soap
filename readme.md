@@ -1,5 +1,16 @@
 # Binotify SOAP Service
-
+Service yang digunakan oleh binotify rest dan binotify app untuk proses subscription dan lainnya. Terhubung dengan database mysql.
+## Skema Basis Data
+![image](https://user-images.githubusercontent.com/71055612/205102275-7b281994-1dc4-4310-9481-3d1f4e531452.png)  
+Terdapat perubahan skema di atas sebagai berikut:
+- Penambahan tabel api_key, digunakan untuk verifikasi api key dari binotify php dan binotify rest.  
+Atribut:
+```
+  `id` int NOT NULL AUTO_INCREMENT,
+  `services` varchar(255) NOT NULL,
+  `api_key` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+```
 ## Features
 ### Logging
 Digunakan untuk memasukkan setiap request yang diterima SOAP ke database.  
@@ -58,4 +69,9 @@ public class CheckStatusController extends Database implements CheckStatusInterf
 }
 ```
 
-## Endpoints
+## Pembagian Tugas SOAP
+| Task        | NIM           |
+| ------------- |-------------|
+|Request Subscription | 13520080 |
+|Check Request | 13520002 |
+|Accept/Reject Request | 13520161 |
