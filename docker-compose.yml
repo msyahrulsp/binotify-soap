@@ -36,4 +36,5 @@ services:
       - DB_PASSWORD=password
       - DB_NAME=binotify-soap
       - DB_PORT=3308
+      - PHP_CALLBACK_URL=http://host.docker.internal:3001/api/update_status.php
     container_name: soap-service
