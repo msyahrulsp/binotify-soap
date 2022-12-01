@@ -1,6 +1,7 @@
 # Binotify SOAP Service
 Service yang digunakan oleh binotify rest dan binotify app untuk proses subscription dan lainnya. Terhubung dengan database mysql.
 ## Skema Basis Data
+![image](https://user-images.githubusercontent.com/71055612/205102275-7b281994-1dc4-4310-9481-3d1f4e531452.png)
 Terdapat perubahan skema di atas sebagai berikut:
 - Penambahan tabel api_key, digunakan untuk verifikasi api key dari binotify php dan binotify rest.  
 Atribut:
