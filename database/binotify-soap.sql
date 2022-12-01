@@ -34,10 +34,10 @@ CREATE TABLE `binotify-soap`.`subscription` (
 );
 
 INSERT INTO `binotify-soap`.`subscription` VALUES
-('3','1','PENDING'),
-('4','2','PENDING'),
-('1','3','ACCEPTED'),
-('1','4','PENDING'),
-('3','1','ACCEPTED'),
-('4','2','REJECTED'),
-('1','3','PENDING');
+('4','1','PENDING'),
+('4','1','PENDING'),
+('4','2','ACCEPTED'),
+('5','2','PENDING'),
+('5','3','ACCEPTED'),
+('6','3','REJECTED'),
+('6','3','PENDING');
