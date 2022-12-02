@@ -38,7 +38,7 @@ public class NewSubscriberController extends Database implements NewSubscriberIn
             try {
                 int res = this.executeUpdate(query);
                 if (res != 0) {
-                    this.sendEmail();
+                    this.sendEmail(creator_id, subscriber_id);
                     insertLog(wsContext, "Mendapatkan data subscription baru", "/subscribe");
                     return true;
                 }
@@ -97,7 +97,7 @@ public class NewSubscriberController extends Database implements NewSubscriberIn
         }
     }
 
-    public void sendEmail() {
+    public void sendEmail(int creator_id, int subscriber_id) {
         Properties prop = new Properties();
         if (System.getenv("MAIL_MODE").equals("dev")) {
             prop.put("mail.smtp.auth", true);
@@ -149,6 +149,14 @@ public class NewSubscriberController extends Database implements NewSubscriberIn
                     "<tr style='border: 0;'>" +
                     "<div style='width:400px;'>Hi " + adminName
                     + ", it looks like there's someone who makes a new subscription request. Don't forget to check them out!</div>"
+                    +
+                    "</tr>" +
+                    "<tr style='border: 0;'>" +
+                    "<div style='width:400px margin-top:10px;'><br /><strong>Subscriber ID</strong>: " + subscriber_id
+                    + "</div>" +
+                    "</tr>" +
+                    "<tr style='border: 0;'>" +
+                    "<div style='width:400px margin-bottom:10px;'><strong>Creator ID</strong>: " + creator_id + "</div>"
                     +
                     "</tr>" +
                     "<tr style='border: 0;'>" +
