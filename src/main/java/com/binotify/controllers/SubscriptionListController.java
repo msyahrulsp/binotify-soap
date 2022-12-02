@@ -24,6 +24,9 @@ public class SubscriptionListController extends Database implements Subscription
             try {
                 ResultSet res = this.executeQuery(query);
                 List<Map<String, Object>> data = getFormattedRes(res);
+                if (data == null) {
+                    return "[]";
+                }
                 if (data.size() > 0) {
                     insertLog(wsContext, "Mendapatkan data subscription", "/subscription-list");
                     return new Gson().toJson(data);
